@@ -1,0 +1,47 @@
+    import java.sql.Connection;
+	import java.sql.DriverManager;
+	import java.sql.PreparedStatement;
+	import java.sql.SQLException;
+
+
+........................................................................................................................
+	
+
+
+
+
+            public class  EMPLOYEE {
+	    public static void main(String[] args) {
+	          String url = "jdbc:mysql://localhost:3306/empdata";
+	        String userName = "root";
+	        String password = "Abishek##11";
+
+	        String query = "INSERT INTO employee (empcoded, empname, empage,esalary) VALUES (?, ?, ?, ?)";
+
+	         Object[][] employees = {
+	            {101, "jenny", 25,10000},
+	            {102, "jacky", 30,20000},
+	            {103, "joe", 20,40000},
+	            {104, "john", 40,80000},
+	            {105, "shameer", 25,90000}
+	        };
+
+	        try (Connection con = DriverManager.getConnection(url, userName, password);
+	             PreparedStatement pst = con.prepareStatement(query)) {
+
+	            for (Object[] emp : employees) {
+	                pst.setInt(1, (int) emp[0]);
+	                pst.setString(2, (String) emp[1]);
+	                pst.setInt(3, (int) emp[2]);               
+	                pst.setInt(4, (int) emp[3]);
+
+	                pst.executeUpdate();
+	            }
+
+	            System.out.println("Employees inserted successfully!");
+
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	    }
+	}
